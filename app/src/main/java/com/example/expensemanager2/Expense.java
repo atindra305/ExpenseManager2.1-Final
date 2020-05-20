@@ -1,20 +1,14 @@
 package com.example.expensemanager2;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,10 +134,6 @@ public class Expense extends AppCompatActivity {
 
                 income.setDate(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getDate());
 
-                if(income.getIncome() == null){
-                    continue;
-                }
-
                 ar += "\n" + (income.getIncome()) + "\n";
 
                 ar += income.getDescription() + "\n";
@@ -168,10 +158,6 @@ public class Expense extends AppCompatActivity {
 
                 payment.setDate(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getDate());
 
-                if(payment.getPayment() == null){
-                    continue;
-                }
-
                 ar += "\n" + payment.getPayment() + "\n";
 
                 ar += payment.getDescription() + "\n";
@@ -191,7 +177,6 @@ public class Expense extends AppCompatActivity {
             ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList){
 
                 @Override
-
                 public View getView(int position, View convertView, ViewGroup parent) {
 
                     View view =super.getView(position, convertView, parent);

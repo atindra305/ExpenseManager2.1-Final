@@ -75,9 +75,6 @@ public class AddIncome extends AppCompatActivity {
 
         uid = user.getUid();
 
-
-
-
         Date c = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -86,8 +83,6 @@ public class AddIncome extends AppCompatActivity {
 
 
         date.setText(formattedDate);
-
-
 
         saveincome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +95,6 @@ public class AddIncome extends AppCompatActivity {
                 getData();
 
                 Income userincome = new Income(am,descr,formattedDate,usertemp);
-
-
 
                 myRef.child("Income").child(uid).child(String.valueOf(usertemp)).setValue(userincome);
 
