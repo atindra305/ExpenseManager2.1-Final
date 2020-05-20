@@ -71,7 +71,12 @@ public class AddPayment extends AppCompatActivity {
                 getData();
                 Payment userpayment = new Payment(amo,descr,formattedDate,usertemp);
 
-                myRef.child(uid).child("Payment").child(String.valueOf(usertemp)).setValue(userpayment);
+                myRef.child("Payment").child(uid).child(String.valueOf(usertemp)).setValue(userpayment);
+
+                amount.setText("");
+                description.setText("");
+
+                Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -71,7 +71,12 @@ public class AddIncome extends AppCompatActivity {
                 getData();
                 Income userincome = new Income(am,descr,formattedDate,usertemp);
 
-                myRef.child(uid).child("Income").child(String.valueOf(usertemp)).setValue(userincome);
+                myRef.child("Income").child(uid).child(String.valueOf(usertemp)).setValue(userincome);
+
+                amount.setText("");
+                description.setText("");
+
+                Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_SHORT).show();
             }
         });
 
