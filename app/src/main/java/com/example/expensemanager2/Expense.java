@@ -140,7 +140,11 @@ public class Expense extends AppCompatActivity {
 
                 income.setDate(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getDate());
 
-                ar += "\n" + income.getIncome() + "\n";
+                if(income.getIncome() == null){
+                    continue;
+                }
+
+                ar += "\n" + (income.getIncome()) + "\n";
 
                 ar += income.getDescription() + "\n";
 
@@ -150,11 +154,23 @@ public class Expense extends AppCompatActivity {
 
                 ar = "";
 
+                flag += 1;
+
+            }
+
+            flag = 0;
+
+            while(flag<max){
+
                 payment.setPayment(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getPayment());
 
                 payment.setDescription(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getDescription());
 
                 payment.setDate(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getDate());
+
+                if(payment.getPayment() == null){
+                    continue;
+                }
 
                 ar += "\n" + payment.getPayment() + "\n";
 
@@ -169,7 +185,6 @@ public class Expense extends AppCompatActivity {
                 ar = "";
 
             }
-
 
 //            ArrayAdapter arrayAdapter =  new ArrayAdapter(this,android.R.layout.simple_list_item_1,arrayList);
 

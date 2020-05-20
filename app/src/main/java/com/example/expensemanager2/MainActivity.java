@@ -19,25 +19,37 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private FirebaseAuth mAuth;
+
     private EditText loginemail;
+
     private EditText loginpassword;
+
     private Button login;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
+
         mAuth = FirebaseAuth.getInstance();
+
         login = findViewById(R.id.login);
 
+
         loginemail = findViewById(R.id.email_login);
+
         loginpassword = findViewById(R.id.password_login);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 signIn(loginemail.getText().toString(),loginpassword.getText().toString());
             }
         });
@@ -45,17 +57,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn(String email,String password){
+
         mAuth.signInWithEmailAndPassword(email, password)
+
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
+
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
+
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -63,10 +82,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user){
+
         startActivity(new Intent(getApplicationContext(),Expense.class));
     }
 
     public void toregister(View view) {
+
         startActivity(new Intent(getApplicationContext(),Register.class));
     }
 }

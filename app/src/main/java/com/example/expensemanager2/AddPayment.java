@@ -43,37 +43,57 @@ public class AddPayment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_payment);
 
+
+
         tooverview = findViewById(R.id.addpayment_overview);
+
         toincome = findViewById(R.id.addpayment_income);
+
         payment = findViewById(R.id.payment);
+
         amount = findViewById(R.id.addpayment_amount);
+
         description  = findViewById(R.id.addpayment_description);
+
         date = findViewById(R.id.addpayment_date);
+
         savepayment = findViewById(R.id.addpayment);
 
         uid = user.getUid();
 
 
+
         Date c = Calendar.getInstance().getTime();
+
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+
         final String formattedDate = df.format(c);
+
         date.setText(formattedDate);
 
 
         savepayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String amo = amount.getText().toString();
+
                 String descr = description.getText().toString();
+
                 getData();
+
                 Payment userpayment = new Payment(amo,descr,formattedDate,usertemp);
 
                 myRef.child("Payment").child(uid).child(String.valueOf(usertemp)).setValue(userpayment);
 
+
                 amount.setText("");
+
                 description.setText("");
 
                 Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_SHORT).show();
@@ -100,14 +120,18 @@ public class AddPayment extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
+
                     Payment earlierpayment = dataSnapshot.getValue(Payment.class);
+
                     usertemp = earlierpayment.temp;
+
                     usertemp += 1;
 
                 }
 
                 @Override
                 public void onCancelled(DatabaseError error) {
+
                     Toast.makeText(getApplicationContext(),"Error in reading database",Toast.LENGTH_SHORT).show();
                 }
             });
