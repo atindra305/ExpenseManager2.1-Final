@@ -36,7 +36,7 @@ public class Expense extends AppCompatActivity {
         toincome = findViewById(R.id.income);
         topayment = findViewById(R.id.payment);
         overview = findViewById(R.id.overview);
-        
+
 
         toincome.setOnClickListener(new View.OnClickListener() {
             @Override

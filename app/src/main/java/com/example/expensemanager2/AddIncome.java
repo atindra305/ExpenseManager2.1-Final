@@ -69,7 +69,6 @@ public class AddIncome extends AppCompatActivity {
                 String am = amount.getText().toString();
                 String descr = description.getText().toString();
                 getData();
-                usertemp += 1;
                 Income userincome = new Income(am,descr,formattedDate,usertemp);
 
                 myRef.child(uid).child("Income").child(String.valueOf(usertemp)).setValue(userincome);
@@ -86,7 +85,7 @@ public class AddIncome extends AppCompatActivity {
         topayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Payment.class));
+                startActivity(new Intent(getApplicationContext(),AddPayment.class));
             }
         });
 
@@ -99,6 +98,7 @@ public class AddIncome extends AppCompatActivity {
 
                 Income earlierIncome = dataSnapshot.getValue(Income.class);
                 usertemp = earlierIncome.temp;
+                usertemp += 1;
 
             }
 

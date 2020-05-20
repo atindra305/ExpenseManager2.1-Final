@@ -103,6 +103,7 @@
         android:layout_marginStart="62dp"
         android:layout_marginTop="86dp"
         android:layout_marginEnd="62dp"
+        android:gravity="center"
         android:ems="10"
         android:inputType="date"
         android:textColor="#FFFFFF"

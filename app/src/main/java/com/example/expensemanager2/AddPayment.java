@@ -69,7 +69,6 @@ public class AddPayment extends AppCompatActivity {
                 String amo = amount.getText().toString();
                 String descr = description.getText().toString();
                 getData();
-                usertemp += 1;
                 Payment userpayment = new Payment(amo,descr,formattedDate,usertemp);
 
                 myRef.child(uid).child("Payment").child(String.valueOf(usertemp)).setValue(userpayment);
@@ -86,7 +85,7 @@ public class AddPayment extends AppCompatActivity {
         toincome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Income.class));
+                startActivity(new Intent(getApplicationContext(),AddIncome.class));
             }
         });
     }
@@ -98,6 +97,7 @@ public class AddPayment extends AppCompatActivity {
 
                     Payment earlierpayment = dataSnapshot.getValue(Payment.class);
                     usertemp = earlierpayment.temp;
+                    usertemp += 1;
 
                 }
 
