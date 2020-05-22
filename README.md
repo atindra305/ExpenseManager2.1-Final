@@ -4,6 +4,7 @@ Sem Project for 1st Year
 # Technology Used
 
 Android Studio - IDE by JetBrains for android app development.
+
 Java - General purpose programming language.
 
 # Flow of Use / How to Use
