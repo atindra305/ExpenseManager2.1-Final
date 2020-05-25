@@ -24,4 +24,6 @@ The top bar has three buttons that make a segue from one function to the other p
 and payment adding page.
 
 # Further changes to be made soon.
+The code contains a few bugs that would be fixed soon.
+The code contains problems in loading list view, and some UI issues.
 
