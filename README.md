@@ -26,4 +26,4 @@ and payment adding page.
 # Further changes to be made soon.
 The code contains a few bugs that would be fixed soon.
 The code contains problems in loading list view, and some UI issues.
-
+Changes will be made soon after the exams get over.
