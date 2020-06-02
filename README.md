@@ -27,3 +27,5 @@ and payment adding page.
 The code contains a few bugs that would be fixed soon.
 The code contains problems in loading list view, and some UI issues.
 Changes will be made soon after the exams get over.
+The project submission dates have been selected on 12 - 18 June 2020.
+A lot of UI changes and Progress is supposed to be made by then.
