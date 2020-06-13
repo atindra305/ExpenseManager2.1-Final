@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +28,8 @@ public class Register extends AppCompatActivity {
 
     private Button register;
 
+    private TextView toLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class Register extends AppCompatActivity {
 
         register = findViewById(R.id.registration);
 
+        toLogin = findViewById(R.id.tologin);
 
         registeremail = findViewById(R.id.email_register);
 
@@ -51,6 +55,15 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
 
                 createAccount(registeremail.getText().toString(),registerpassword.getText().toString());
+            }
+        });
+
+        toLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
             }
         });
     }
@@ -85,10 +98,5 @@ public class Register extends AppCompatActivity {
     protected void updateUI(FirebaseUser user){
 
         startActivity(new Intent(getApplicationContext(),Expense.class));
-    }
-
-    public void tologin(View view) {
-
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 }

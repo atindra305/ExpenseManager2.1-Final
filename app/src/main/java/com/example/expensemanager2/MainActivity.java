@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button login;
 
+    private TextView toRegister;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         login = findViewById(R.id.login);
 
+        toRegister = findViewById(R.id.toregister);
 
         loginemail = findViewById(R.id.email_login);
 
@@ -51,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 signIn(loginemail.getText().toString(),loginpassword.getText().toString());
+            }
+        });
+
+        toRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getApplicationContext(),Register.class));
+
             }
         });
 
@@ -84,10 +96,5 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user){
 
         startActivity(new Intent(getApplicationContext(),Expense.class));
-    }
-
-    public void toregister(View view) {
-
-        startActivity(new Intent(getApplicationContext(),Register.class));
     }
 }
