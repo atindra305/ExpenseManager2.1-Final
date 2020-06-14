@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,6 +50,8 @@ public class Expense extends AppCompatActivity {
 
     private long max;
 
+    String userchangedDate;
+
     private TextView todaysDate;
 
     private ImageView goBack;
@@ -56,6 +61,10 @@ public class Expense extends AppCompatActivity {
     private TextView addIncome;
 
     private TextView addPayment;
+
+    Calendar c;
+
+    DatePickerDialog dpd;
 
     List<SliceValue> pieData = new ArrayList<>();
 
@@ -215,11 +224,73 @@ public class Expense extends AppCompatActivity {
 
     private void addactivity(int temp){
 
+            EditText amount = findViewById(R.id.amount);
+
+            EditText description = findViewById(R.id.description);
+
+            final TextView changeDateText = findViewById(R.id.datechangetext);
+
+            Button cancel = findViewById(R.id.cancel);
+
+            final TextView changedate = findViewById(R.id.changedate);
+
+            Button save = findViewById(R.id.save);
+
             final AlertDialog.Builder alert = new AlertDialog.Builder(Expense.this);
+
             View view = getLayoutInflater().inflate(R.layout.add_activity_dialog,null);
+
             alert.setView(view);
+
             final AlertDialog alertDialog = alert.create();
+
             alertDialog.show();
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    alertDialog.dismiss();
+
+                }
+            });
+
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+//                    savedata();
+
+                }
+            });
+
+            changedate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    c = Calendar.getInstance();
+
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+
+                    int month = c.get(Calendar.MONTH);
+
+                    int year =  c.get(Calendar.YEAR);
+
+                    dpd = new DatePickerDialog(Expense.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                            userchangedDate = (dayOfMonth+"-"+month+"-"+year);
+
+                            changeDateText.setText(userchangedDate);
+
+                        }
+                    },day,month,year);
+
+                    dpd.show();
+
+                }
+            });
     }
 
 }
