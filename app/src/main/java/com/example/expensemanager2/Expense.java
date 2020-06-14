@@ -1,6 +1,7 @@
 package com.example.expensemanager2;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -52,6 +53,10 @@ public class Expense extends AppCompatActivity {
 
     private PieChartView pieChartView;
 
+    private TextView addIncome;
+
+    private TextView addPayment;
+
     List<SliceValue> pieData = new ArrayList<>();
 
     @Override
@@ -62,6 +67,10 @@ public class Expense extends AppCompatActivity {
         setContentView(R.layout.activity_expense);
 
         todaysDate = findViewById(R.id.todaysdate);
+
+        addIncome = findViewById(R.id.addincome);
+
+        addPayment = findViewById(R.id.addpayment);
 
         goBack = findViewById(R.id.goback);
 
@@ -87,6 +96,20 @@ public class Expense extends AppCompatActivity {
             }
         });
 
+        addIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addactivity(0);
+            }
+        });
+
+        addPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addactivity(1);
+            }
+        });
+
 
     }
 
@@ -104,11 +127,6 @@ public class Expense extends AppCompatActivity {
 
 
     }
-
-
-
-
-
 
 
 
@@ -192,4 +210,16 @@ public class Expense extends AppCompatActivity {
             }
         }
     }
+
+
+
+    private void addactivity(int temp){
+
+            final AlertDialog.Builder alert = new AlertDialog.Builder(Expense.this);
+            View view = getLayoutInflater().inflate(R.layout.add_activity_dialog,null);
+            alert.setView(view);
+            final AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+    }
+
 }

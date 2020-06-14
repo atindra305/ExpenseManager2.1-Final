@@ -90,4 +90,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chart" />
 
+    <TextView
+        android:id="@+id/addincome"
+        android:layout_width="119dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="36dp"
+        android:autoText="true"
+        android:clickable="true"
+        android:text="Add Income"
+        android:textColor="#F35B23"
+        android:textColorLink="#FFFFFF"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintEnd_toStartOf="@+id/addpayment"
+        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/addpayment"
+        android:layout_width="119dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
+        android:autoText="true"
+        android:clickable="true"
+        android:text="Add Payment"
+        android:textColor="#F35B23"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
