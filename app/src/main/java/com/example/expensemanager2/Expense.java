@@ -3,6 +3,7 @@ package com.example.expensemanager2;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -68,8 +69,6 @@ public class Expense extends AppCompatActivity {
         pieChartView = findViewById(R.id.chart);
 
         getData();
-
-        addpie();
 
         addDate();
 
@@ -148,39 +147,35 @@ public class Expense extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void showdata(DataSnapshot dataSnapshot) {
 
-        int flag = 0;
+        max = dataSnapshot.child(uid).getChildrenCount();
+
+        long flag = 0;
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-            max = ds.child(uid).getChildrenCount();
+            while(flag < max){
 
-            Activity activity = new Activity();
+                String amount = ds.child(String.valueOf(flag)).getValue(Activity.class).getAmount();
 
-            while (flag < max) {
+                String description = ds.child(String.valueOf(flag)).getValue(Activity.class).getDescription();
 
-                pieData.add(new SliceValue(10, Color.BLACK).setLabel("Test"));
+                int temp = ds.child(String.valueOf(flag)).getValue(Activity.class).getTemp();
 
-                activity.setAmount(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getAmount());
+                if(temp == 0){
 
-                activity.setDescription(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getDescription());
-
-                activity.setTemp(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getTemp());
-
-                if (activity.getTemp() == 0) {
-
-                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag * 10, 100 + flag * 5, 0)).setLabel("Income " + activity.getAmount() + " " + activity.getDescription()));
+                    pieData.add(new SliceValue(Integer.parseInt(amount), Color.rgb(244,135,47)).setLabel("Income\n"+description));
 
                 } else {
 
-                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag * 10, 100 + flag * 5, 0)).setLabel("Payment " + activity.getAmount() + " " + activity.getDescription()));
+                    pieData.add(new SliceValue(Integer.parseInt(amount), Color.rgb(240,165, 0)).setLabel("Payment\n"+description));
 
                 }
-
-                pieData.add(new SliceValue(10, Color.BLACK).setLabel("Test"));
 
                 flag += 1;
 
             }
         }
+
+        addpie();
     }
 }
