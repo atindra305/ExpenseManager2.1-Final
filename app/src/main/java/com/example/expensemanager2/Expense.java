@@ -49,6 +49,14 @@ public class Expense extends AppCompatActivity {
 
     private ImageView addactivity;
 
+    private int totalincome;
+
+    private int totalpayment;
+
+    private TextView incomeinfo;
+
+    private TextView paymentinfo;
+
     private PieChartView pieChartView;
 
     List<SliceValue> pieData = new ArrayList<>();
@@ -61,6 +69,10 @@ public class Expense extends AppCompatActivity {
         setContentView(R.layout.activity_expense);
 
         todaysDate = findViewById(R.id.todaysdate);
+
+        incomeinfo = findViewById(R.id.incomeinfo);
+
+        paymentinfo = findViewById(R.id.paymentinfo);
 
         addactivity = findViewById(R.id.addactivity);
 
@@ -102,11 +114,10 @@ public class Expense extends AppCompatActivity {
         pieChartData.setHasLabels(true);
 
         pieChartData.setHasLabels(true).setValueLabelTextSize(13);
-        
+
         pieChartData.setHasCenterCircle(true).setCenterText1(max + " activities").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#FF807E7E"));
 
         pieChartView.setPieChartData(pieChartData);
-
 
     }
 
@@ -163,11 +174,15 @@ public class Expense extends AppCompatActivity {
 
                 if(temp == 0){
 
-                    pieData.add(new SliceValue(Integer.parseInt(amount), Color.rgb(244,135,47)).setLabel("Income\n"+description));
+                    pieData.add(new SliceValue(Integer.parseInt(amount), Color.rgb(244,135,47)).setLabel("Income\n"+amount+" "+description));
+
+                    totalincome += Integer.parseInt(amount);
 
                 } else {
 
-                    pieData.add(new SliceValue(Integer.parseInt(amount), Color.rgb(240,165, 0)).setLabel("Payment\n"+description));
+                    pieData.add(new SliceValue(Integer.parseInt(amount), Color.rgb(240,165, 0)).setLabel("Payment\n"+amount+" "+description));
+
+                    totalpayment += Integer.parseInt(amount);
 
                 }
 
@@ -175,6 +190,10 @@ public class Expense extends AppCompatActivity {
 
             }
         }
+
+        incomeinfo.setText("Total income : "+totalincome);
+
+        paymentinfo.setText("Total payment : "+totalpayment);
 
         addpie();
     }

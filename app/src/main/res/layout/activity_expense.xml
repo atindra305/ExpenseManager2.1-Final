@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/todaysdate"
-        android:layout_width="134dp"
+        android:layout_width="141dp"
         android:layout_height="27dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="200dp"
@@ -94,12 +94,37 @@
         android:id="@+id/addactivity"
         android:layout_width="47dp"
         android:layout_height="52dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_box_black_24dp"
         tools:ignore="VectorDrawableCompat" />
+
+    <TextView
+        android:id="@+id/incomeinfo"
+        android:layout_width="235dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="40dp"
+        android:autoText="true"
+        android:textColor="#909090"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/paymentinfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todaysdate"
+        app:layout_constraintVertical_bias="0.611" />
+
+    <TextView
+        android:id="@+id/paymentinfo"
+        android:layout_width="235dp"
+        android:layout_height="35dp"
+        android:autoText="true"
+        app:autoSizeTextType="uniform"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="34dp"
+        android:textColor="#ABABAB"
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
