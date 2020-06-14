@@ -101,8 +101,8 @@ public class Expense extends AppCompatActivity {
 
         pieChartData.setHasLabels(true);
 
-        pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-
+        pieChartData.setHasLabels(true).setValueLabelTextSize(13);
+        
         pieChartData.setHasCenterCircle(true).setCenterText1(max + " activities").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#FF807E7E"));
 
         pieChartView.setPieChartData(pieChartData);
