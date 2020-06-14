@@ -167,23 +167,23 @@ public class Expense extends AppCompatActivity {
 
             max = ds.child(uid).getChildrenCount();
 
-            Income income = new Income();
+            Activity activity = new Activity();
 
             while(flag<max) {
 
-                income.setIncome(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getIncome());
+                activity.setAmount(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getAmount());
 
-                income.setDescription(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getDescription());
+                activity.setDescription(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getDescription());
 
-                income.setTemp(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getTemp());
+                activity.setTemp(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getTemp());
 
-                if(income.getTemp() == 0){
+                if(activity.getTemp() == 0){
 
-                    pieData.add(new SliceValue(15, Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Income "+income.getIncome()+" "+income.getDescription()));
+                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Income "+activity.getAmount()+" "+activity.getDescription()));
 
                 } else {
 
-                    pieData.add(new SliceValue(15, Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Payment "+income.getIncome()+" "+income.getDescription()));
+                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Payment "+activity.getAmount()+" "+activity.getDescription()));
 
                 }
 
