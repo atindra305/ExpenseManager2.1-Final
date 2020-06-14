@@ -191,9 +191,9 @@ public class Expense extends AppCompatActivity {
             }
         }
 
-        incomeinfo.setText("Total income : "+totalincome);
+        incomeinfo.setText("Total income : "+totalincome + " ₹");
 
-        paymentinfo.setText("Total payment : "+totalpayment);
+        paymentinfo.setText("Total payment : "+totalpayment+" ₹");
 
         addpie();
     }
