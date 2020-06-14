@@ -1,14 +1,17 @@
 package com.example.expensemanager2;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +24,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.view.PieChartView;
 
 public class Expense extends AppCompatActivity {
 
@@ -31,21 +42,17 @@ public class Expense extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    private Button toincome;
-
-    private Button topayment;
-
-    private Button overview;
-
     private String uid;
 
-    private String ar = "";
+    private long max;
 
+    private TextView todaysDate;
 
-    private ListView listView;
+    private ImageView goBack;
 
+    private PieChartView pieChartView;
 
-    ArrayList<String> arrayList = new ArrayList<>();
+    List<SliceValue> pieData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,47 +61,79 @@ public class Expense extends AppCompatActivity {
 
         setContentView(R.layout.activity_expense);
 
+        todaysDate = findViewById(R.id.todaysdate);
 
-        toincome = findViewById(R.id.income);
+        goBack = findViewById(R.id.goback);
 
-        topayment = findViewById(R.id.payment);
+        pieChartView = findViewById(R.id.chart);
 
-        overview = findViewById(R.id.overview);
+        getData();
 
-        listView = findViewById(R.id.listview);
+        addpie();
+
+        addDate();
+
 
 
         uid = user.getUid();
 
-        getData();
 
-
-        toincome.setOnClickListener(new View.OnClickListener() {
+        goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),AddIncome.class));
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
             }
         });
 
-
-        topayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(getApplicationContext(),AddPayment.class));
-
-            }
-        });
 
     }
+
+    public void addpie(){
+
+        PieChartData pieChartData = new PieChartData(pieData);
+
+        pieChartData.setHasLabels(true);
+
+        pieChartData.setHasLabels(true).setValueLabelTextSize(14);
+
+        pieChartData.setHasCenterCircle(true).setCenterText1(max+" activities").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#FF807E7E"));
+
+        pieChartView.setPieChartData(pieChartData);
+
+
+    }
+
+
+
+
+
+
+
+
+
+    public void addDate(){
+
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+
+        String formattedDate = df.format(c);
+
+        todaysDate.setText(formattedDate);
+    }
+
+
+
+
 
 
     public void getData(){
 
         myRef.addValueEventListener(new ValueEventListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -114,15 +153,19 @@ public class Expense extends AppCompatActivity {
     }
 
 
+
+
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showdata(DataSnapshot dataSnapshot) {
 
         long flag = 0;
 
         for(DataSnapshot ds : dataSnapshot.getChildren()){
 
-            long max = ds.child(uid).getChildrenCount();
-
-            Payment payment = new Payment();
+            max = ds.child(uid).getChildrenCount();
 
             Income income = new Income();
 
@@ -132,69 +175,21 @@ public class Expense extends AppCompatActivity {
 
                 income.setDescription(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getDescription());
 
-                income.setDate(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getDate());
+                income.setTemp(ds.child(uid).child(String.valueOf(flag)).getValue(Income.class).getTemp());
 
-                ar += "\n" + (income.getIncome()) + "\n";
+                if(income.getTemp() == 0){
 
-                ar += income.getDescription() + "\n";
+                    pieData.add(new SliceValue(15, Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Income "+income.getIncome()+" "+income.getDescription()));
 
-                ar += income.getDate() + "\n";
+                } else {
 
-                arrayList.add(ar);
-
-                ar = "";
-
-                flag += 1;
-
-            }
-
-            flag = 0;
-
-            while(flag<max){
-
-                payment.setPayment(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getPayment());
-
-                payment.setDescription(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getDescription());
-
-                payment.setDate(ds.child(uid).child(String.valueOf(flag)).getValue(Payment.class).getDate());
-
-                ar += "\n" + payment.getPayment() + "\n";
-
-                ar += payment.getDescription() + "\n";
-
-                ar += payment.getDate() + "\n";
-
-                flag += 1;
-
-                arrayList.add(ar);
-
-                ar = "";
-
-            }
-
-//            ArrayAdapter arrayAdapter =  new ArrayAdapter(this,android.R.layout.simple_list_item_1,arrayList);
-
-            ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList){
-
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-
-                    View view =super.getView(position, convertView, parent);
-
-                    TextView textView=(TextView) view.findViewById(android.R.id.text1);
-
-                    textView.setTextColor(Color.WHITE);
-
-                    textView.setTextSize(20);
-
-                    return view;
+                    pieData.add(new SliceValue(15, Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Payment "+income.getIncome()+" "+income.getDescription()));
 
                 }
 
-            };
+                flag += 1;
 
-
-            listView.setAdapter(arrayAdapter);
+            }
         }
     }
 }
