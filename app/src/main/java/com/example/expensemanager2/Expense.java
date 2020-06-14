@@ -51,11 +51,9 @@ public class Expense extends AppCompatActivity {
 
     private ImageView goBack;
 
+    private ImageView addactivity;
+
     private PieChartView pieChartView;
-
-    private TextView addIncome;
-
-    private TextView addPayment;
 
     List<SliceValue> pieData = new ArrayList<>();
 
@@ -68,9 +66,7 @@ public class Expense extends AppCompatActivity {
 
         todaysDate = findViewById(R.id.todaysdate);
 
-        addIncome = findViewById(R.id.addincome);
-
-        addPayment = findViewById(R.id.addpayment);
+        addactivity = findViewById(R.id.addactivity);
 
         goBack = findViewById(R.id.goback);
 
@@ -81,8 +77,6 @@ public class Expense extends AppCompatActivity {
         addpie();
 
         addDate();
-
-
 
         uid = user.getUid();
 
@@ -96,20 +90,14 @@ public class Expense extends AppCompatActivity {
             }
         });
 
-        addIncome.setOnClickListener(new View.OnClickListener() {
+        addactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addactivity(0);
+
+                startActivity(new Intent(getApplicationContext(),AddActivity.class));
+
             }
         });
-
-        addPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addactivity(1);
-            }
-        });
-
 
     }
 
@@ -128,9 +116,6 @@ public class Expense extends AppCompatActivity {
 
     }
 
-
-
-
     public void addDate(){
 
         Date c = Calendar.getInstance().getTime();
@@ -141,11 +126,6 @@ public class Expense extends AppCompatActivity {
 
         todaysDate.setText(formattedDate);
     }
-
-
-
-
-
 
     public void getData(){
 
@@ -170,16 +150,10 @@ public class Expense extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void showdata(DataSnapshot dataSnapshot) {
 
-        long flag = 0;
+        int flag = 0;
 
         for(DataSnapshot ds : dataSnapshot.getChildren()){
 
@@ -188,6 +162,8 @@ public class Expense extends AppCompatActivity {
             Activity activity = new Activity();
 
             while(flag<max) {
+
+                pieData.add(new SliceValue(10,Color.BLACK).setLabel("Test"));
 
                 activity.setAmount(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getAmount());
 
@@ -205,21 +181,11 @@ public class Expense extends AppCompatActivity {
 
                 }
 
+                pieData.add(new SliceValue(10,Color.BLACK).setLabel("Test"));
+
                 flag += 1;
 
             }
         }
     }
-
-
-
-    private void addactivity(int temp){
-
-            final AlertDialog.Builder alert = new AlertDialog.Builder(Expense.this);
-            View view = getLayoutInflater().inflate(R.layout.add_activity_dialog,null);
-            alert.setView(view);
-            final AlertDialog alertDialog = alert.create();
-            alertDialog.show();
-    }
-
 }
