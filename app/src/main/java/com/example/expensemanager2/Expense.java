@@ -1,7 +1,6 @@
 package com.example.expensemanager2;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,11 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +80,7 @@ public class Expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
             }
         });
@@ -94,14 +89,14 @@ public class Expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),AddActivity.class));
+                startActivity(new Intent(getApplicationContext(), AddActivity.class));
 
             }
         });
 
     }
 
-    public void addpie(){
+    public void addpie() {
 
         PieChartData pieChartData = new PieChartData(pieData);
 
@@ -109,14 +104,14 @@ public class Expense extends AppCompatActivity {
 
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
 
-        pieChartData.setHasCenterCircle(true).setCenterText1(max+" activities").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#FF807E7E"));
+        pieChartData.setHasCenterCircle(true).setCenterText1(max + " activities").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#FF807E7E"));
 
         pieChartView.setPieChartData(pieChartData);
 
 
     }
 
-    public void addDate(){
+    public void addDate() {
 
         Date c = Calendar.getInstance().getTime();
 
@@ -127,7 +122,7 @@ public class Expense extends AppCompatActivity {
         todaysDate.setText(formattedDate);
     }
 
-    public void getData(){
+    public void getData() {
 
         myRef.addValueEventListener(new ValueEventListener() {
 
@@ -144,7 +139,7 @@ public class Expense extends AppCompatActivity {
 
             public void onCancelled(DatabaseError error) {
 
-                Toast.makeText(getApplicationContext(),"Error reading database",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error reading database", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -155,15 +150,15 @@ public class Expense extends AppCompatActivity {
 
         int flag = 0;
 
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
             max = ds.child(uid).getChildrenCount();
 
             Activity activity = new Activity();
 
-            while(flag<max) {
+            while (flag < max) {
 
-                pieData.add(new SliceValue(10,Color.BLACK).setLabel("Test"));
+                pieData.add(new SliceValue(10, Color.BLACK).setLabel("Test"));
 
                 activity.setAmount(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getAmount());
 
@@ -171,17 +166,17 @@ public class Expense extends AppCompatActivity {
 
                 activity.setTemp(ds.child(uid).child(String.valueOf(flag)).getValue(Activity.class).getTemp());
 
-                if(activity.getTemp() == 0){
+                if (activity.getTemp() == 0) {
 
-                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Income "+activity.getAmount()+" "+activity.getDescription()));
+                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag * 10, 100 + flag * 5, 0)).setLabel("Income " + activity.getAmount() + " " + activity.getDescription()));
 
                 } else {
 
-                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag*10,100+ flag*5,0)).setLabel("Payment "+activity.getAmount()+" "+activity.getDescription()));
+                    pieData.add(new SliceValue(Integer.parseInt(activity.getAmount()), Color.rgb(250 + flag * 10, 100 + flag * 5, 0)).setLabel("Payment " + activity.getAmount() + " " + activity.getDescription()));
 
                 }
 
-                pieData.add(new SliceValue(10,Color.BLACK).setLabel("Test"));
+                pieData.add(new SliceValue(10, Color.BLACK).setLabel("Test"));
 
                 flag += 1;
 
